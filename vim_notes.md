@@ -75,6 +75,52 @@ Vim难上手，学习曲线陡峭
 ## 2.2 Vim模式
 
 - normal模式
-
 - 编辑模式：i/a/o I/A/O. i - insert ; a - append ; o - open a line below
+- 命令模式
+- 可视化模式
+
+### 2.2.1 Vim 和其他很多编辑器的区别在于多种模式
+
+- 进入vim默认是normal(普通)模式?为什么不是编辑模式呢
+- 使用a(append) i (insert)等进入编辑模式
+- 还有:cmd命令模式和v(isual)可视化模式
+
+进入vim默认是normal模式，使用Esc从插入回到普通模式。普通模式下可以进行各种命令操作和移动。大部分情况下是在浏览而不是编辑，所以vim默认是normal模式。
+
+### 2.2.2 INSERT模式
+
+- 使用a i o 进入插入模式
+- 使用Esc退出插入模式到normal模式
+- A I O是如何进入插入模式的
+
+### 2.2.3 Command(命令)模式
+
+Normal模式下输入:后执行命令，如保存退出 :wq
+
+- 顾名思义，执行vim命令，比如保存:w ,退出:q 
+- 比如分屏:vs(vertical split) , :sp(split)
+- 比如使用:%s/foo/bar/g全局替换
+
+### 2.2.4 Visual(可视)模式
+
+Visual模式一般用来块状选择文本
+
+- Normal模式下使用v进入visual选择
+- 使用V选择行
+- 使用ctrl + v进行方块选择
+
+## 2.3 Vim插入模式小技巧
+
+- 进入vim之后首先使用a/i/o之一进入插入模式
+- ctrl + h 删除上一个字符；ctrl + w删除上一个单词; ctrl + u删除当前行
+
+快速切换insert和normal模式：
+
+很多键盘的键位设置，ESC按起来不方便，不方便切换到normal
+
+- 使用Ctrl + c代替Esc(但可能会中断某些插件)或 Ctrl + [
+- gi 快速跳到你最后一次编辑的地方并进入插入模式
+- 在配置章节讲解如何映射方便的快捷键来代替Esc
+
+
 
