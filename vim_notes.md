@@ -311,3 +311,53 @@ Tab(标签页)切换操作
 | :tabn[ext]      | gt           | q切换到下一标签页       |
 | :tabp[reviouse] | gT           | q切换到上一标签页       |
 
+## 2.8 vim的text object
+
+text object:文本对象
+
+vim里文本也有对象的概念，比如一个单词，一段句子，一个段落
+
+很多其他编辑器经常只能操作单个字符来修改文本，比较低效
+
+通过操作文本对象来修改要比只操作单个字符高效
+
+### 2.8.1 文本对象的操作方式
+
+之前已经使用过文本对象了，如dw 删除一个单词
+
+- [number]\<command>[text object]
+- number表示次数，command是命令，d(elete), c(hange),y(ank)
+- text object 是要操作的文本对象，比如单词w,句子s,段落p
+
+示例如下图：
+
+![text object](./text_object.png)
+
+
+
+![text_object](./text_object1.png)
+
+i----inner, a---around
+
+viw--
+
+vaw--
+
+caw--
+
+vi"--选中双引号中的内容
+
+ci"--删除双引号中的内容并进入插入模式
+
+ci{
+
+ci(
+
+**延伸：有些插件扩展了文本对象，比如vim-go可以使用f表示一个函数**
+
+## 2.9 vim复制粘贴与寄存器的使用
+
+### 2.9.1 vim normal 模式复制粘贴
+
+- normal模式下复制粘贴分别使用y(yank)和p(put)，剪贴d和p
+- 我们可以使用v(visual)命令选中所要复制的地方，使用y进行复制，然后使用p粘贴
