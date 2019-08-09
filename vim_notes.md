@@ -1007,13 +1007,198 @@ github主页： https://github.com/majutsushi/tagbar
 
 **依赖**
 
-universal-ctags
+需要安装universal ctags生成对应的tag文件
 
+快速浏览当前文件代码结构，并且搜索跳转到对应代码块
 
+触发
 
+在normal模式下，:TagbarToggle
 
+在vimrc中加上tagbar的配置
 
+```bash
+" tagbar
+nnoremap <leader>t :TagbarToggle<CR>
+```
 
+跳转buffer , :e filename
+
+ctrl p 配置，忽略一些文件
+
+```bash
+" crtlp ,在~/.agingore添加一行node_modules
+set g:ctrlp_custom_ignore = {
+    \ 'dir': '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(exe|so|dll|swp|pyc|pyo)$',
+    \}
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+if executable('ag')
+		" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+		set grepprg=ag\ --nogroup\ --nocolor
+		" Use ag in CtrlP for listing files. Lighting fast, respects .gitigore
+		" and .agigore. Igores hidden files by default.
+		let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+else 
+		" ctrl+p ignore files in .gitignore
+		let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+endif
+
+```
+
+**vim-interestingwords**
+
+高亮你感兴趣的单词，浏览代码很有用
+
+https://github.com/lfv89/vim-interestingwords
+
+浏览代码的时候经常需要知道一个变量的使用方式和使用地点，我们可以使用这个插件同时高亮多个单词
+
+## 4.11 强大的vim代码补全插件
+
+这里介绍通用的代码补全插件
+
+**deoplete.vim**
+
+一个强大的neovim/vim8异步补全插件，vim8才开始支持异步
+
+https://github.com/shougo/deoplete.nvim
+
+支持多种编程语言，支持模糊匹配。需要安装对应编程语言的扩展
+
+其他语言的插件，如deoplete-go . deoplete-jedi
+
+**coc.vim**
+
+一个强大的neovim/vim8补全插件。LSP支持
+
+LSP：language server protocol
+
+https://github.com/neoclide/coc.vim
+
+full language server protocol support as VSCode
+
+多语言插件支持
+
+## 4.12 代码格式化与静态检查
+
+格式化工具可以使代码格式符合规范，而静态检查是为了让编写的代码更加规范。如golint/pylint/eslint等工具。无论编写何种编程语言，最好都加上自动格式化和静态检查工具
+
+**格式化工具**
+
+Neoformat
+
+vim-autoformat和Neoformat是两种使用较多的格式化插件
+
+https://github.com/sbdchd/neoformat
+
+但需要安装对应语言的格式化库。如python的autopep8, js的prettier等
+
+**静态检查Lint**
+
+neomake和ale是两种常用的lint插件，这里选用ale
+
+https://github.com/w0rp/ale
+
+同样需要安装对应语言的lint库，比如eslint/pylint/golint等
+
+vim8/neovim支持异步检查，不会影响vim编辑，推荐使用
+
+## 4.13 vim快速注释代码
+
+**vim-commentary**
+
+vim注释插件有很多，这里使用这个比较轻量的
+
+https://github.com/tpope/vim-commentary
+
+记住常用的命令gc注释和取消注释
+
+插件会根据不同的文件类型使用不同注释，如Python(#) , golang(//)
+
+## 4.14 vim和git结合
+
+**Fugitive**
+
+在vim里使用git
+
+https://github.com/tpope/vim-fugitive
+
+可以使用Gedit, Gdiff, Gblame,  Gcommit等命令
+
+当然也可以使用tmux新开一个窗口来使用git
+
+**vim-gitgutter**
+
+在vim里显示文件变动
+
+https://github.com/airblade/vim-gitgutter
+
+当我们修改文件之后可以显示当前文件的变动，哪些行新增，哪些行修改了，哪些行删除了
+
+在vimrc中加入 set updatetime=100 " 100ms
+
+**gv.vim**
+
+如何在命令行查看提交记录呢？可以使用命令行工具tig
+
+https://github.com/junegunn/gv.vim
+
+在vim中使用 :GV命令调用，这样就可以在vim中查看代码提交记录了
+
+## 4.15寻找自己需要的插件
+
+通过搜索引擎google关键/vimawesome/参考开源配置等方式寻找插件
+
+学会阅读插件的Readme文件和doc里的帮助文件学习插件使用
+
+# 5 与时俱进的vim
+
+## 5.1 vim与tmux
+
+tmux强大的终端复用工具
+
+功能：
+
+- 复用终端、分屏、托管进程等
+- 在服务器是即使退出服务器也不会被kill，托管进程也很方便
+- 可以方便第分割屏幕实现多个公用屏幕
+
+会话，窗口
+
+Ctrl + b %/"左右/上下分屏 ctrl + b h/l 左右移动 ctrl + b p/n
+
+ctrl b d脱离会话
+
+服务器上使用比较方便，每次退出服务器后，再次ssh登录后，可以使用tmux -a 再次进入之前的会话，进行继续编辑或执行命令，tmux会话不会被服务器kill掉
+
+## 5.2 让vim嵌入开发工具
+
+让vim嵌入你的开发工具，甚至chrome都有vimium插件。及时你不用vim作为主力编辑器，依然可以使用它的编辑方式。几乎流行的开发工具都支持vim插件，以vim的方式编辑。比如vscode/atom/pycharm等都支持安装vim插件
+
+## 5.3 与时俱进vim之neovim
+
+一个新的vim版本支持异步特性(vim8也支持)
+
+https://neovim.io
+
+neovim开发更活跃，更丰富的特性和扩展，异步支持。neovim的设计可以嵌入到很多GUI里，加上好看的"外壳"
+
+## 5.4 使用开源配置
+
+https://github.com/SpaceVim/SpaceVim
+
+https://github.com/PegasusWang/vim-config
+
+其他的开源配置不推荐新手直接使用，越复杂的配置上手成本越高
+
+# 6 课程总结
+
+《Practical vim》
+
+《笨方法学vimscript》
+
+学习和开发自己的插件
 
 
 
